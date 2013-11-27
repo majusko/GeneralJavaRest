@@ -1,4 +1,4 @@
-package com.goyello.esa.web.controllers;
+package sk.kapusta.resource;
 
 import java.util.Collection;
 
@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goyello.esa.model.CollectionOfElements;
-import com.goyello.esa.model.Message;
-import com.goyello.esa.storage.MessageStorage;
+import sk.kapusta.model.CollectionOfElements;
+import sk.kapusta.model.Message;
+import sk.kapusta.storage.MessageStorage;
 
 @Controller
-public class MessageController {
+public class MessageEndpoint {
 
 	@Autowired(required = true)
 	private MessageStorage messageStorage;
 
-	public MessageController(MessageStorage messageStorage) {
+	public MessageEndpoint(MessageStorage messageStorage) {
 		super();
 		this.messageStorage = messageStorage;
 	}
 
-	public MessageController() {
+	public MessageEndpoint() {
 
 	}
 

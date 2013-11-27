@@ -1,4 +1,4 @@
-package com.goyello.esa.storage;
+package sk.kapusta.storage;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -15,10 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import sk.kapusta.model.Message;
+
 import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import com.googlecode.ehcache.annotations.When;
-import com.goyello.esa.model.Message;
 
 @Component
 public class MemoryMessageStorage implements MessageStorage {

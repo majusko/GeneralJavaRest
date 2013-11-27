@@ -1,4 +1,4 @@
-package com.resource;
+package sk.kapusta.resource;
 
 public class UserEndpoint {
 

@@ -1,4 +1,4 @@
-package com.goyello.esa.model;
+package sk.kapusta.model;
 
 import java.util.Collection;
 

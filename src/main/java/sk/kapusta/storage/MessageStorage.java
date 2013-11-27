@@ -1,8 +1,8 @@
-package com.goyello.esa.storage;
+package sk.kapusta.storage;
 
 import java.util.Collection;
 
-import com.goyello.esa.model.Message;
+import sk.kapusta.model.Message;
 
 public interface MessageStorage {
 

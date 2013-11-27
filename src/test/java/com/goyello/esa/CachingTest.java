@@ -1,7 +1,6 @@
 package com.goyello.esa;
 
 import static org.mockito.Mockito.*;
-
 import net.sf.ehcache.CacheManager;
 
 import org.junit.Before;
@@ -13,9 +12,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.goyello.esa.model.Message;
-import com.goyello.esa.storage.MessageStorage;
-import com.goyello.esa.web.controllers.MessageController;
+import sk.kapusta.model.Message;
+import sk.kapusta.resource.MessageEndpoint;
+import sk.kapusta.storage.MessageStorage;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring-context-test.xml" })
@@ -31,7 +30,7 @@ public class CachingTest {
 	
 	MessageStorage storageDelegate;
 	
-	MessageController controller;
+	MessageEndpoint controller;
 	
 	
 	@Before
@@ -39,7 +38,7 @@ public class CachingTest {
 		storageDelegate = Mockito.mock(MessageStorage.class);
 		storage = (MessageStorage) context.getBean("messageStorage");
 		storage.setDelegate(storageDelegate);
-		controller = new MessageController(storage);
+		controller = new MessageEndpoint(storage);
 		
 		cacheManager.clearAll();
 	}

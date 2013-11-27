@@ -23,11 +23,11 @@
     
 	<mvc:annotation-driven />
 
-	<context:component-scan base-package="com.goyello.esa" />
+	<context:component-scan base-package="sk.kapusta" />
 
 	<oxm:jaxb2-marshaller id="marshaller">
-		<oxm:class-to-be-bound name="com.goyello.esa.model.Message" />
-		<oxm:class-to-be-bound name="com.goyello.esa.model.CollectionOfElements" />
+		<oxm:class-to-be-bound name="sk.kapusta.model.Message" />
+		<oxm:class-to-be-bound name="sk.kapusta.model.CollectionOfElements" />
 	</oxm:jaxb2-marshaller>
 
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

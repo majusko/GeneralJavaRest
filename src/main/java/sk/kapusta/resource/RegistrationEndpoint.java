@@ -1,4 +1,4 @@
-package com.resource;
+package sk.kapusta.resource;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -6,13 +6,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -21,6 +14,13 @@ import org.apache.oltu.oauth2.rs.request.OAuthAccessResourceRequest;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import sk.kapusta.entity.User;
 import sk.kapusta.exceptions.UserRegistrationException;
@@ -33,7 +33,8 @@ import sk.kapusta.service.UserService;
  * @author Mario Kapusta - kapusta@eglu.sk
  *
  */
-@Path("/registration")
+@Controller
+@RequestMapping("/registration")
 public class RegistrationEndpoint  extends BaseEndpoint {
 
 	private AuthorizationService authorizationService;
@@ -46,11 +47,11 @@ public class RegistrationEndpoint  extends BaseEndpoint {
 		
 	}
 	
-	@POST
-	@Path("/user")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response userRegistration(User requestUser, @Context HttpServletRequest request) throws OAuthSystemException {
+    @RequestMapping(method = RequestMethod.POST,
+	value = "/user",
+	consumes = MediaType.APPLICATION_JSON_VALUE,
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> userRegistration(@ModelAttribute User requestUser, HttpServletRequest request) throws OAuthSystemException {
 	    
 		try {
 			
@@ -66,8 +67,8 @@ public class RegistrationEndpoint  extends BaseEndpoint {
 		    
 		    final User responseUser = userService.getUserByLogin(requestUser.getLogin());
 		    final String responseJson = mapper.writeValueAsString(responseUser);
-		    
-		    return Response.ok(responseJson, MediaType.APPLICATION_JSON).build();
+
+            return new ResponseEntity<String>(responseJson, HttpStatus.OK);
 			
 		} catch (OAuthSystemException e) {
 			return buildSimpleBadRequestResponse();

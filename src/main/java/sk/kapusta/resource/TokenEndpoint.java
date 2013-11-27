@@ -1,4 +1,4 @@
-package com.resource;
+package sk.kapusta.resource;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -7,9 +7,11 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Response;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
@@ -30,6 +32,7 @@ import sk.kapusta.security.PasswordHash;
 import sk.kapusta.service.AuthorizationService;
 import sk.kapusta.service.UserService;
 
+@Controller
 @RequestMapping("/token")
 public class TokenEndpoint extends BaseEndpoint {
     
@@ -47,8 +50,9 @@ public class TokenEndpoint extends BaseEndpoint {
     		value = "",
     		consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
     		produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response authorize(HttpServletRequest request) throws OAuthSystemException, SQLException {
-        try {
+    public ResponseEntity<String> authorize(HttpServletRequest request) throws OAuthSystemException, SQLException {
+        
+    	try {
         	
             final OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
             final OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
@@ -132,8 +136,8 @@ public class TokenEndpoint extends BaseEndpoint {
                     .setExpiresIn(String.valueOf(expireTimestamp.getTime()))
                     .buildJSONMessage();
             
-            return Response.status(response.getResponseStatus()).entity(response.getBody()).build();
-
+            return new ResponseEntity<String>(response.getBody(), HttpStatus.OK);
+            
         } catch (OAuthProblemException e) {
             return buildSimpleBadRequestResponse();
         } catch (OAuthSystemException e) {
