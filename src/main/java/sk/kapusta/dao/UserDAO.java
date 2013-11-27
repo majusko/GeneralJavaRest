@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+
 import sk.kapusta.entity.User;
 import sk.kapusta.enums.UserStatus;
 import sk.kapusta.security.JavaMD5Generator;

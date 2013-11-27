@@ -1,4 +1,4 @@
-package sk.kapusta.model;
+package sk.kapusta.entity;
 
 import java.util.Collection;
 

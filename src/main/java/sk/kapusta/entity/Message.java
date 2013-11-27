@@ -1,25 +1,15 @@
-package sk.kapusta.model;
+package sk.kapusta.entity;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @SuppressWarnings("serial")
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.NONE)
 public class Message implements Serializable {
 	
-	@XmlAttribute
 	private Long id;
 	
-	@XmlAttribute
 	private String to;
 	
-	@XmlElement
 	private String body;
 	
 	public Message() {

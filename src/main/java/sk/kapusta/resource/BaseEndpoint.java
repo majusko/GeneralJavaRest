@@ -192,7 +192,7 @@ public class BaseEndpoint {
     	
     }
     
-    public ResponseEntity<String> buildSimpleBadRequestResponse() throws OAuthSystemException {
+    public ResponseEntity<String> buildSimpleBadRequestResponse() {
     	
     	try {
 
@@ -212,7 +212,7 @@ public class BaseEndpoint {
 
     }
     
-    public ResponseEntity<String> buildHashProblemResponse() throws OAuthSystemException {
+    public ResponseEntity<String> buildHashProblemResponse() {
     	
     	try {
 
@@ -232,7 +232,7 @@ public class BaseEndpoint {
 
     }
     
-    public ResponseEntity<String> buildInvalidRegistrationResponse() throws OAuthSystemException {
+    public ResponseEntity<String> buildInvalidRegistrationResponse() {
     	
     	try {
 
@@ -252,7 +252,7 @@ public class BaseEndpoint {
 
     }
     
-    public ResponseEntity<String> buildInvalidJSONResponse() throws OAuthSystemException {
+    public ResponseEntity<String> buildInvalidJSONResponse() {
     	
     	try {
 

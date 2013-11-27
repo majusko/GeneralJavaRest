@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import sk.kapusta.model.Message;
+import sk.kapusta.entity.Message;
 
 import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.TriggersRemove;
@@ -44,12 +44,14 @@ public class MemoryMessageStorage implements MessageStorage {
 	
 	@PostConstruct
 	public void initialize() {
+		
 		// add some messages
 		addMessage(new Message("user:1", "content-1"));
 		addMessage(new Message("user:2", "content-2"));
 		addMessage(new Message("user:3", "content-3"));
 		addMessage(new Message("user:4", "content-4"));
 		addMessage(new Message("user:5", "content-5"));
+		
 	}
 	
 	@Override

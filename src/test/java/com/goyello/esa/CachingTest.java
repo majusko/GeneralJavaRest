@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import sk.kapusta.model.Message;
+import sk.kapusta.entity.Message;
 import sk.kapusta.resource.MessageEndpoint;
 import sk.kapusta.storage.MessageStorage;
 

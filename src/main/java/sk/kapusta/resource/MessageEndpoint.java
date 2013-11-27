@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import sk.kapusta.model.CollectionOfElements;
-import sk.kapusta.model.Message;
+import sk.kapusta.entity.CollectionOfElements;
+import sk.kapusta.entity.Message;
 import sk.kapusta.storage.MessageStorage;
 
 @Controller

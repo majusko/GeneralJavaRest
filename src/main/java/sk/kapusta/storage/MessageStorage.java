@@ -2,7 +2,7 @@ package sk.kapusta.storage;
 
 import java.util.Collection;
 
-import sk.kapusta.model.Message;
+import sk.kapusta.entity.Message;
 
 public interface MessageStorage {
 
