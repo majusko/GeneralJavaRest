@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import sk.kapusta.entity.User;
 
-public interface UserStorage {
+public interface UserStorageInt extends GenericStorageInt {
 
 	User findUserByLogin(String login);
 
@@ -12,6 +12,6 @@ public interface UserStorage {
 
 	void addUser(User message);
 
-	void setDelegate(UserStorage storageDelegate);
+	void setDelegate(UserStorageInt storageDelegate);
 	
 }

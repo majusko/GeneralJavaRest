@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import sk.kapusta.entity.Message;
 
-public interface MessageStorage {
+public interface MessageStorageInt extends GenericStorageInt {
 
 	Message findMessage(long id);
 
@@ -12,5 +12,5 @@ public interface MessageStorage {
 
 	void addMessage(Message message);
 
-	void setDelegate(MessageStorage storageDelegate);
+	void setDelegate(MessageStorageInt storageDelegate);
 }

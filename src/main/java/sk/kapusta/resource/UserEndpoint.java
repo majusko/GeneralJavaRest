@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,20 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import sk.kapusta.entity.User;
-import sk.kapusta.service.UserService;
+import sk.kapusta.service.UserServiceInt;
 
-@Controller
 @RequestMapping("/user")
+@Controller
 public class UserEndpoint extends BaseEndpoint {
-
-	//private AuthorizationService authorizationService;
-	private UserService userService;
 	
-	public UserEndpoint(){
-		
-		//authorizationService = AuthorizationService.getAuthorizationService();
-		userService = UserService.getUserService();
-		
+	@Autowired(required = true)
+	private UserServiceInt userService;
+
+	public UserEndpoint(UserServiceInt userService) {
+		super();
+		this.userService = userService;
+	}
+
+	public UserEndpoint() {
+
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{login}/login")
@@ -50,5 +53,7 @@ public class UserEndpoint extends BaseEndpoint {
 		} catch (IOException e) {
 			return buildSimpleBadRequestResponse();
 		}
+		
 	}
+	
 }

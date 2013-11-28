@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,21 +30,27 @@ import sk.kapusta.entity.AccessToken;
 import sk.kapusta.entity.OAuthCommon;
 import sk.kapusta.entity.User;
 import sk.kapusta.security.PasswordHash;
-import sk.kapusta.service.AuthorizationService;
-import sk.kapusta.service.UserService;
+import sk.kapusta.service.AccessTokenServiceInt;
+import sk.kapusta.service.UserServiceInt;
 
 @Controller
 @RequestMapping("/token")
 public class TokenEndpoint extends BaseEndpoint {
-    
-	private AuthorizationService authorizationService;
-	private UserService userService;
 	
-	public TokenEndpoint(){
-		
-		authorizationService = AuthorizationService.getAuthorizationService();
-		userService = UserService.getUserService();
-		
+	@Autowired(required = true)
+	private AccessTokenServiceInt authorizationService;
+	
+	@Autowired(required = true)
+	private UserServiceInt userService;
+	
+	public TokenEndpoint(UserServiceInt userService, AccessTokenServiceInt authorizationService) {
+		super();
+		this.userService = userService;
+		this.authorizationService = authorizationService;	
+	}
+
+	public TokenEndpoint() {
+
 	}
 	
     @RequestMapping(method = RequestMethod.POST,

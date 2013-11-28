@@ -22,23 +22,23 @@ import com.googlecode.ehcache.annotations.TriggersRemove;
 import com.googlecode.ehcache.annotations.When;
 
 @Component
-public class MemoryMessageStorage implements MessageStorage {
+public class MessageStorageImpl implements MessageStorageInt {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(MemoryMessageStorage.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MessageStorageImpl.class);
 	
 	private Map<Long, Message> messages;
 
 	private AtomicLong newID;
 
-	private MessageStorage storageDelegate;
+	private MessageStorageInt storageDelegate;
 
-	public MemoryMessageStorage() {
+	public MessageStorageImpl() {
 		messages = Collections.synchronizedMap(new HashMap<Long, Message>());
 		newID = new AtomicLong(0);
 	}
 	
 	@Override
-	public void setDelegate(MessageStorage storageDelegate) {
+	public void setDelegate(MessageStorageInt storageDelegate) {
 		this.storageDelegate = storageDelegate;
 	}
 	

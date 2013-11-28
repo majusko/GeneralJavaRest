@@ -5,8 +5,11 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.Date;
 
-import sk.kapusta.dao.AccessTokenDAO;
-import sk.kapusta.dao.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import sk.kapusta.dao.AccessTokenDAOInt;
+import sk.kapusta.dao.UserDAOInt;
 import sk.kapusta.entity.AccessToken;
 import sk.kapusta.entity.OAuthCommon;
 import sk.kapusta.entity.User;
@@ -18,30 +21,26 @@ import sk.kapusta.security.PasswordHash;
  *
  */
 
-public class AuthorizationService {
+@Component
+public class AccessTokenServiceImpl implements AccessTokenServiceInt {
+	
+	@Autowired(required = true)
+	private UserDAOInt userDAO;
+	
+	@Autowired(required = true)
+	private AccessTokenDAOInt accessTokenDAO;
+	
+	public AccessTokenServiceImpl(UserDAOInt userDAO, AccessTokenDAOInt accessTokenDAO) {
+		super();
+		this.userDAO = userDAO;
+		this.accessTokenDAO = accessTokenDAO;
+	}
 
-	private UserDAO userDAO;
-	private AccessTokenDAO accessTokenDAO;
-	
-	public static AuthorizationService authorizationService;
-	
-	public AuthorizationService(){
-		
-		userDAO = UserDAO.getUserDAO();
-		accessTokenDAO = AccessTokenDAO.getBudgetCategoryDAO();
+	public AccessTokenServiceImpl() {
 		
 	}
 	
-	public static synchronized AuthorizationService getAuthorizationService() {
-		
-		if ( authorizationService == null ) {	
-			authorizationService = new AuthorizationService();
-		}
-		
-		return authorizationService;
-		
-	}
-	
+	@Override
 	public boolean checkClientId(String clientId) {
 		
 		if(OAuthCommon.CLIENT_ID.equals(clientId)){
@@ -52,6 +51,7 @@ public class AuthorizationService {
         
     }
 
+	@Override
     public boolean checkClientSecret(String secret) {
 
 		if(OAuthCommon.CLIENT_SECRET.equals(secret)){
@@ -62,6 +62,7 @@ public class AuthorizationService {
         
     }
 
+	@Override
     public boolean checkAuthCode(String authCode) {
 
 		if(OAuthCommon.AUTHORIZATION_CODE.equals(authCode)){
@@ -72,6 +73,7 @@ public class AuthorizationService {
         
     }
 
+	@Override
     public boolean checkUserPass(String login, String password) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
     	
     	final User user = userDAO.getUserByLogin(login);
@@ -82,7 +84,8 @@ public class AuthorizationService {
     	
     	return false;
     }
-    
+
+	@Override
     public boolean checkRegistrationToken(String registrationToken) throws NoSuchAlgorithmException, InvalidKeySpecException {
     	
     	registrationToken = registrationToken.replace("Bearer", "").trim();
@@ -94,7 +97,8 @@ public class AuthorizationService {
     	return false;
     	
     }
-    
+
+	@Override
     public boolean checkAccessToken(String accessToken) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
 
     	accessToken = accessToken.replace("Bearer", "").trim();
@@ -115,7 +119,8 @@ public class AuthorizationService {
     	return false;
     	
     }
-    
+
+	@Override
     public boolean checkRefreshToken(String refreshToken, String installationId) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
     	
     	if(refreshToken != null && !refreshToken.trim().isEmpty()){
@@ -132,20 +137,23 @@ public class AuthorizationService {
     	return false;
     	
     }
-    
-    public void updateOAuthInfo(AccessToken oAuthInfo) throws SQLException{
+
+	@Override
+    public void updateOAuthInfo(AccessToken oAuthInfo) throws SQLException {
     	
     	accessTokenDAO.updateOAuthInfo(oAuthInfo);
     	
     }
-    
-    public void setOAuthInfo(AccessToken oAuthInfo) throws SQLException{
+
+	@Override
+    public void setOAuthInfo(AccessToken oAuthInfo) throws SQLException {
     	
     	accessTokenDAO.saveOAuthInfo(oAuthInfo);
     	
     }
-    
-    public AccessToken getOAuthInfo(Long userId, String installationId) throws SQLException{
+
+	@Override
+    public AccessToken getOAuthInfo(Long userId, String installationId) throws SQLException {
     	
     	 final AccessToken accessToken = accessTokenDAO.getOAuthInfo(userId, installationId);
     	 

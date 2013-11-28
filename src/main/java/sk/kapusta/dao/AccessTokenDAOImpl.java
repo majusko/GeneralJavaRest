@@ -5,25 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.springframework.stereotype.Repository;
+
 import sk.kapusta.entity.AccessToken;
 
-public class AccessTokenDAO extends BaseDAO implements DAOInterface {
-
-	public static AccessTokenDAO accessTokenDAO;
+@Repository
+public class AccessTokenDAOImpl extends BaseDAO implements AccessTokenDAOInt {
 	
-	public AccessTokenDAO(){
+	public AccessTokenDAOImpl(){
 		
 		super();
-		
-	}
-	
-	public static synchronized AccessTokenDAO getBudgetCategoryDAO() {
-		
-		if ( accessTokenDAO == null ) {	
-			accessTokenDAO = new AccessTokenDAO();
-		}
-		
-		return accessTokenDAO;
 		
 	}
 	
@@ -48,7 +39,7 @@ public class AccessTokenDAO extends BaseDAO implements DAOInterface {
 	//								OAUTH
 	//---------------------------------------------------------------------------------
 	
-	public void saveOAuthInfo(AccessToken oAuthInfo) throws SQLException{
+	public void saveOAuthInfo(AccessToken oAuthInfo) throws SQLException {
 		
 		oAuthInfo = handleEmptyIds(oAuthInfo);
 		

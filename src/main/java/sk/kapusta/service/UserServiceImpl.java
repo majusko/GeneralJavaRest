@@ -7,34 +7,27 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import sk.kapusta.dao.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import sk.kapusta.dao.UserDAOInt;
 import sk.kapusta.entity.User;
 import sk.kapusta.enums.UserStatus;
 import sk.kapusta.exceptions.UserRegistrationException;
 import sk.kapusta.security.JavaMD5Generator;
 import sk.kapusta.security.PasswordHash;
 
-public class UserService implements ServiceInterface {
+@Component
+public class UserServiceImpl implements UserServiceInt {
 
-	public final UserDAO userDAO;
-	public static UserService userService;
-	
-	public UserService(){
+	@Autowired(required = true)
+	private UserDAOInt userDAO;
 
-		userDAO = UserDAO.getUserDAO();
-		
+	public UserServiceImpl() {
+
 	}
 	
-	public static synchronized UserService getUserService() {
-		
-		if ( userService == null ) {	
-			userService = new UserService();
-		}
-		
-		return userService;
-		
-	}
-	
+	@Override
 	public User registerUser(User requestUser) throws UserRegistrationException, NoSuchAlgorithmException, SQLException, InvalidKeySpecException {
 		
 		validateUserRegistration(requestUser);
@@ -60,7 +53,8 @@ public class UserService implements ServiceInterface {
 		
 	}
 	
-	public User getUserByLogin(String login) throws SQLException{
+	@Override
+	public User getUserByLogin(String login) throws SQLException {
 		
 		final User user = userDAO.getUserByLogin(login);
 		
@@ -68,7 +62,8 @@ public class UserService implements ServiceInterface {
 		
 	}
 	
-	public User getUserByAccessToken(String accessToken) throws SQLException{
+	@Override
+	public User getUserByAccessToken(String accessToken) throws SQLException {
 		
 		accessToken = accessToken.replace("Bearer", "").trim();
 		
@@ -78,7 +73,8 @@ public class UserService implements ServiceInterface {
 		
 	}
 	
-	public User getUserByRefreshToken(String refreshToken) throws SQLException{
+	@Override
+	public User getUserByRefreshToken(String refreshToken) throws SQLException {
 		
 		final User user = userDAO.getUserByRefreshToken(refreshToken);
 		

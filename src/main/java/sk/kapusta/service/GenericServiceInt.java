@@ -1,15 +1,8 @@
-/**
- * 
- */
 package sk.kapusta.service;
 
 import java.sql.SQLException;
 
-/**
- * @author Mario Kapusta - kapusta@eglu.sk
- *
- */
-public interface ServiceInterface {
+public interface GenericServiceInt {
 
 	public int getNextId() throws SQLException;
 	

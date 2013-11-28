@@ -11,29 +11,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.googlecode.ehcache.annotations.Cacheable;
+import org.springframework.stereotype.Repository;
 
 import sk.kapusta.entity.User;
 import sk.kapusta.enums.UserStatus;
 import sk.kapusta.security.JavaMD5Generator;
 
-public class UserDAO extends BaseDAO implements DAOInterface {
+@Repository
+public class UserDAOImpl extends BaseDAO implements UserDAOInt {
 	
-	public static UserDAO userDAO;
-	
-	public UserDAO(){
+	public UserDAOImpl(){
 		
 		super();
-		
-	}
-	
-	public static synchronized UserDAO getUserDAO() {
-		
-		if ( userDAO == null ) {	
-			userDAO = new UserDAO();
-		}
-		
-		return userDAO;
 		
 	}
 	
@@ -53,7 +42,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		
 		return maxId;
 	}
-	
+
+	@Override
 	public User getUserByLogin(String login) throws SQLException {
 		
 		final String query = " SELECT * FROM User WHERE login = ? ";
@@ -80,7 +70,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return user;
 		
 	}
-	
+
+	@Override
 	public User getUserByEmail(String email) throws SQLException {
 		
 		final String query = " SELECT * FROM User WHERE email = ? ";
@@ -107,7 +98,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return user;
 		
 	}
-	
+
+	@Override
 	public User getUserByAccessToken(String accessToken) throws SQLException {
 		
 		final String query = " SELECT u.* FROM User u LEFT JOIN AccessToken a ON(u.userId = a.user) WHERE accessToken = ? ";
@@ -134,7 +126,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return user;
 		
 	}
-	
+
+	@Override
 	public User getUserByRefreshToken(String refreshToken) throws SQLException {
 		
 		final String query = " SELECT u.* FROM User u LEFT JOIN AccessToken a ON(u.userId = a.user) WHERE refreshToken = ? ";
@@ -161,7 +154,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return user;
 		
 	}
-	
+
+	@Override
 	public User getUser(String entityId) throws SQLException {
 		
 		final String query = " SELECT * FROM User WHERE entityId = ? ";
@@ -188,7 +182,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return user;
 		
 	}
-	
+
+	@Override
 	public User getUser(Long userId) throws SQLException {
 		
 		final String query = " SELECT * FROM User WHERE userId = ? ";
@@ -215,7 +210,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return user;
 		
 	}
-	
+
+	@Override
 	public User getNewUser(Long devRevisionNum) throws SQLException {
 		
 		final String query = " SELECT * FROM User WHERE revisionNumber > ? ";
@@ -242,7 +238,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return user;
 		
 	}
-	
+
+	@Override
 	public Set<User> getUsersLong(List<Long> userIds) throws SQLException {
 		
 		final String initialSQL = " SELECT * FROM User WHERE userId ";
@@ -278,7 +275,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return users;
 		
 	}
-	
+
+	@Override
 	public Set<User> getUsersString(List<String> entityIds) throws SQLException {
 		
 		final String initialSQL = " SELECT * FROM User WHERE userId ";
@@ -312,7 +310,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		return users;
 		
 	}
-	
+
+	@Override
 	public void saveUser(User user) throws SQLException, NoSuchAlgorithmException {
 		
 		user = handleEmptyIds(user);
@@ -334,7 +333,8 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		preparedStatement.executeUpdate();
 		
 	}
-	
+
+	@Override
 	public void updateUser(User user) throws SQLException {
 		
 		final String query = " UPDATE User "
@@ -354,6 +354,7 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		
 	}
 	
+	@Override
 	public void deleteUser(Long userId) throws SQLException {
 		
 		final String query = " DELETE FROM User WHERE userId = ? ";
@@ -365,7 +366,7 @@ public class UserDAO extends BaseDAO implements DAOInterface {
 		
 	}
 	
-	private User handleEmptyIds(User user) throws SQLException, NoSuchAlgorithmException{
+	private User handleEmptyIds(User user) throws SQLException, NoSuchAlgorithmException {
 		
 		if(user.getUserId() == null){
 			

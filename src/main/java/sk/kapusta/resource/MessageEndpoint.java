@@ -1,8 +1,13 @@
 package sk.kapusta.resource;
 
-import java.util.Collection;
+import java.io.IOException;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,17 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import sk.kapusta.entity.CollectionOfElements;
 import sk.kapusta.entity.Message;
-import sk.kapusta.storage.MessageStorage;
+import sk.kapusta.storage.MessageStorageInt;
 
 @Controller
 public class MessageEndpoint {
 
 	@Autowired(required = true)
-	private MessageStorage messageStorage;
+	private MessageStorageInt messageStorage;
 
-	public MessageEndpoint(MessageStorage messageStorage) {
+	public MessageEndpoint(MessageStorageInt messageStorage) {
 		super();
 		this.messageStorage = messageStorage;
 	}
@@ -49,10 +53,16 @@ public class MessageEndpoint {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/message")
-	public ModelAndView getAllMessages() {
-		Collection<Message> messages = messageStorage.findAllMessages();
-		ModelAndView mav = new ModelAndView("messages");
-		mav.addObject("messages", new CollectionOfElements(messages));
-		return mav;
+	public ResponseEntity<String> getAllMessages() throws JsonGenerationException, JsonMappingException, IOException {
+		
+			
+			final ObjectMapper mapper = new ObjectMapper();
+			Message message = messageStorage.findMessage(1);
+		    final String responseJson = mapper.writeValueAsString(message);
+		    
+			return new ResponseEntity<String>(responseJson, HttpStatus.OK);
+
+
+		
 	}
 }

@@ -10,20 +10,22 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.stereotype.Component;
+
 import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 import com.googlecode.ehcache.annotations.When;
 
-import sk.kapusta.entity.Message;
 import sk.kapusta.entity.User;
 
-public class MemoryUserStorage implements UserStorage {
+@Component
+public class UserStorageImpl implements UserStorageInt {
 	
 	private Map<Long, User> users;
 
-	private UserStorage storageDelegate;
+	private UserStorageInt storageDelegate;
 	
-	public MemoryUserStorage() {
+	public UserStorageImpl() {
 		
 		users = Collections.synchronizedMap(new HashMap<Long, User>());
 		
@@ -88,7 +90,7 @@ public class MemoryUserStorage implements UserStorage {
 	}
 
 	@Override
-	public void setDelegate(UserStorage storageDelegate) {
+	public void setDelegate(UserStorageInt storageDelegate) {
 		this.storageDelegate = storageDelegate;
 	}
 	
