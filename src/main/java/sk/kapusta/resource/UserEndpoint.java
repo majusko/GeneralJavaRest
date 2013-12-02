@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import sk.kapusta.entity.User;
 import sk.kapusta.service.UserServiceInt;
+import sk.kapusta.storage.UserStorageInt;
 
 @RequestMapping("/user")
 @Controller
@@ -23,6 +24,9 @@ public class UserEndpoint extends BaseEndpoint {
 	
 	@Autowired(required = true)
 	private UserServiceInt userService;
+	
+	@Autowired(required = true)
+	private UserStorageInt storageDelegate;
 
 	public UserEndpoint(UserServiceInt userService) {
 		super();
@@ -39,13 +43,12 @@ public class UserEndpoint extends BaseEndpoint {
 		try {
 			
 			final ObjectMapper mapper = new ObjectMapper();
-			final User responseUser = userService.getUserByLogin(login);
+			//final User responseUser = userService.getUserByLogin(login);
+			final User responseUser = storageDelegate.findUserByLogin(login);
 		    final String responseJson = mapper.writeValueAsString(responseUser);
 		    
 			return new ResponseEntity<String>(responseJson, HttpStatus.OK);
 
-		} catch (SQLException e) {
-			return buildBadSQLResponse();
 		} catch (JsonGenerationException e) {
 			return buildInvalidJSONResponse();
 		} catch (JsonMappingException e) {

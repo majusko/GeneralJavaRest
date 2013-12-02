@@ -2,11 +2,11 @@ package sk.kapusta.storage;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
 
@@ -21,13 +21,13 @@ import sk.kapusta.entity.User;
 @Component
 public class UserStorageImpl implements UserStorageInt {
 	
-	private Map<Long, User> users;
+	private Map<String, User> users;
 
 	private UserStorageInt storageDelegate;
 	
 	public UserStorageImpl() {
 		
-		users = Collections.synchronizedMap(new HashMap<Long, User>());
+		users = Collections.synchronizedMap(new ConcurrentHashMap<String, User>());
 		
 	}
 	
@@ -81,7 +81,7 @@ public class UserStorageImpl implements UserStorageInt {
 	@TriggersRemove(cacheName = "messagesCache", when = When.AFTER_METHOD_INVOCATION, removeAll = true)
 	public void addUser(User user) {
 		
-		users.put(user.getUserId(), user);
+		users.put(user.getLogin(), user);
 		
 		if(storageDelegate != null){
 			storageDelegate.addUser(user);

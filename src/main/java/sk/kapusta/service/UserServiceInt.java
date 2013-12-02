@@ -9,12 +9,12 @@ import sk.kapusta.exceptions.UserRegistrationException;
 
 public interface UserServiceInt extends GenericServiceInt {
 
-	User registerUser(User requestUser) throws UserRegistrationException, NoSuchAlgorithmException, SQLException, InvalidKeySpecException;
+	public User registerUser(User requestUser) throws UserRegistrationException, NoSuchAlgorithmException, SQLException, InvalidKeySpecException;
 	
-	User getUserByLogin(String login) throws SQLException;
+	public User getUserByLogin(String login) throws SQLException;
 	
-	User getUserByAccessToken(String accessToken) throws SQLException;
+	public User getUserByAccessToken(String accessToken) throws SQLException;
 	
-	User getUserByRefreshToken(String refreshToken) throws SQLException;
+	public User getUserByRefreshToken(String refreshToken) throws SQLException;
 	
 }

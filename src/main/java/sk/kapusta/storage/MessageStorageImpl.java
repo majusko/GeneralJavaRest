@@ -2,11 +2,11 @@ package sk.kapusta.storage;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.PostConstruct;
@@ -33,7 +33,7 @@ public class MessageStorageImpl implements MessageStorageInt {
 	private MessageStorageInt storageDelegate;
 
 	public MessageStorageImpl() {
-		messages = Collections.synchronizedMap(new HashMap<Long, Message>());
+		messages = Collections.synchronizedMap(new ConcurrentHashMap<Long, Message>());
 		newID = new AtomicLong(0);
 	}
 	
