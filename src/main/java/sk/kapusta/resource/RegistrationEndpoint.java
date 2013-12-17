@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import sk.kapusta.entity.User;
 import sk.kapusta.exceptions.UserRegistrationException;
-import sk.kapusta.service.AccessTokenServiceInt;
-import sk.kapusta.service.UserServiceInt;
+import sk.kapusta.service.i.AccessTokenServiceInt;
+import sk.kapusta.service.i.UserServiceInt;
 
 /**
  * @author Mario Kapusta - kapusta@eglu.sk

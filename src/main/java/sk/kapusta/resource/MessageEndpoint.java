@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import sk.kapusta.entity.Message;
-import sk.kapusta.storage.MessageStorageInt;
+import sk.kapusta.storage.i.MessageStorageInt;
 
 @Controller
 public class MessageEndpoint {

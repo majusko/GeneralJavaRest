@@ -30,8 +30,8 @@ import sk.kapusta.entity.AccessToken;
 import sk.kapusta.entity.OAuthCommon;
 import sk.kapusta.entity.User;
 import sk.kapusta.security.PasswordHash;
-import sk.kapusta.service.AccessTokenServiceInt;
-import sk.kapusta.service.UserServiceInt;
+import sk.kapusta.service.i.AccessTokenServiceInt;
+import sk.kapusta.service.i.UserServiceInt;
 
 @Controller
 @RequestMapping("/token")

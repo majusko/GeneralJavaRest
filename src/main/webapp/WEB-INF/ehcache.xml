@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
     <defaultCache eternal="true" maxElementsInMemory="100" overflowToDisk="false" />
-    <cache name="userCache"
-       maxElementsInMemory="1000"
-       maxElementsOnDisk="10000"
-       overflowToDisk="true"
-       eternal="true"
-       >
-	</cache>
 	<cache name="usersCache"
-       maxElementsInMemory="1000"
-       maxElementsOnDisk="10000"
-       overflowToDisk="true"
-       timeToIdleSeconds="3600"
-       timeToLiveSeconds="7200"
-       >
-	</cache>
-	<cache name="messageCache"
        maxElementsInMemory="1000"
        maxElementsOnDisk="10000"
        overflowToDisk="true"

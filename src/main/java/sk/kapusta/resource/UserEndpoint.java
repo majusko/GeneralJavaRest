@@ -1,7 +1,6 @@
 package sk.kapusta.resource;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import sk.kapusta.entity.User;
-import sk.kapusta.service.UserServiceInt;
-import sk.kapusta.storage.UserStorageInt;
+import sk.kapusta.service.i.UserServiceInt;
+import sk.kapusta.storage.i.UserStorageInt;
 
 @RequestMapping("/user")
 @Controller
